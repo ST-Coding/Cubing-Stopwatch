@@ -34,7 +34,6 @@ def Main():
     root.config(bg="black")
     root.mainloop()
 
-
 class StopWatch(Frame):
 
     def __init__(self, parent=None, **kw):
@@ -86,3 +85,4 @@ class StopWatch(Frame):
 
 if __name__ == '__main__':
     Main()
+print('lolol')
