@@ -1,3 +1,4 @@
+"Hi my name is Theeran and this is my code"
 
 from tkinter import *
 import time
