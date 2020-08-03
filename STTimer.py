@@ -1,6 +1,44 @@
-
 from tkinter import *
 import time
+import random
+
+let = ["R", "R'", "L", "L'", "U", "U'", "D", "D'", "F", "F'", "B", "B'", "R2", "L2", "U2", "F2", "D2", "B2"]
+r, l, f, b, u, d = [["R", "R'", "R2"], ["L", "L'", "L2"], ["F", "F'", "F2"], ["B", "B'", "B2"], ["U", "U'", "U2"],
+                    ["D", "D'", "D2"]]
+
+
+def generate_scramble():
+    global r, l, f, b, u, d, let
+    scramble = ""
+    prev = str(random.choice(let))
+    prevlist = []
+    for i in range(1, 22):
+        k = 0
+        while k == 0:
+            if prev in r:
+                prevlist = r.copy()
+            elif prev in l:
+                prevlist = l.copy()
+            elif prev in f:
+                prevlist = f.copy()
+            elif prev in b:
+                prevlist = b.copy()
+            elif prev in u:
+                prevlist = u.copy()
+            elif prev in d:
+                prevlist = d.copy()
+
+            curr = str(random.choice(let))
+            if curr in prevlist:
+                continue
+            else:
+                scramble = scramble + " " + curr
+                prev = curr
+                k = 1
+    return scramble
+
+
+scrambles = str(generate_scramble())
 
 
 def Main():
@@ -29,10 +67,13 @@ def Main():
     Start.pack(side=LEFT)
     Stop = Button(Bottom, text='Stop', font=("Avenir Next", 40), command=stopWatch.Stop, width=10, height=2)
     Stop.pack(side=RIGHT)
-    Title = Label(Top, text="ST Cubing Timer", font=("Avenir Next", 160), fg="white", bg="black")
+    Scramble = Label(Top, text=scrambles, font=("Avenir Next", 15), width=150, height=2, fg="yellow", bg="gray10")
+    Scramble.pack(side=TOP)
+    Title = Label(Top, text="ST Cubing Timer", font=("Avenir Next", 150), fg="aqua", bg="gray10")
     Title.pack(fill=X)
-    root.config(bg="black")
+    root.config(bg="gray10")
     root.mainloop()
+
 
 class StopWatch(Frame):
 
@@ -45,9 +86,9 @@ class StopWatch(Frame):
         self.MakeWidget()
 
     def MakeWidget(self):
-        timeText = Label(self, textvariable=self.timestr, font=("Avenir Next", 135), fg="yellow", bg="black")
+        timeText = Label(self, textvariable=self.timestr, font=("Avenir Next", 135), fg="yellow", bg="gray10")
         self.SetTime(self.nextTime)
-        timeText.pack(fill=X, expand=NO, pady=2, padx=2)
+        timeText.pack(fill=X, expand=YES)
 
     def Updater(self):
         self.nextTime = time.time() - self.startTime
@@ -58,7 +99,7 @@ class StopWatch(Frame):
         minutes = int(nextElap / 60)
         seconds = int(nextElap - minutes * 60.0)
         miliSeconds = int((nextElap - minutes * 60.0 - seconds) * 100)
-        self.timestr.set('%02d:%02d:%02d' % (minutes, seconds, miliSeconds))
+        self.timestr.set('%02d:%02d.%02d' % (minutes, seconds, miliSeconds))
 
     def Start(self):
         if not self.onRunning:
@@ -81,8 +122,8 @@ class StopWatch(Frame):
         self.startTime = time.time()
         self.nextTime = 0.0
         self.SetTime(self.nextTime)
+        Main()
 
 
 if __name__ == '__main__':
     Main()
-
