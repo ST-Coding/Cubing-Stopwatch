@@ -122,7 +122,6 @@ class StopWatch(Frame):
         self.startTime = time.time()
         self.nextTime = 0.0
         self.SetTime(self.nextTime)
-        Main()
 
 
 if __name__ == '__main__':
